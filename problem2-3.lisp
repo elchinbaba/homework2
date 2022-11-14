@@ -25,7 +25,7 @@
         (cond ((and (not (null prev-literals)) (is-in prev-literals literal_))
           (set-literals (cdr clauses_) prev-literals))
             ((and (not (null prev-literals)) (is-in prev-literals (negated-literal literal_)))
-          (set-literals (cdr clauses_) prev-literals))
+          1)
           (t
             (set-literals (cdr clauses_) (cons literal_ prev-literals))))) ; (cons literal_ (set-literals (cdr clauses_) prev-literals))
         (t
@@ -101,37 +101,24 @@
       (setf non-literals (set-non-literals clauses))
       (setf literals (set-literals clauses))
 
-      (print non-literals)
-      (print literals)
+      ;; (print non-literals)
+      ;; (print literals)
       (do ((x 1 (+ x 1)))
         ((or (null non-literals) (> x 5)) nil)
         (setf non-literals (update-non-literals non-literals literals))
-        (print non-literals)
-
-
+        ;;(print non-literals)
 
         (setf literals (set-literals non-literals literals))
         (print literals)
-
-        (setf is-end (check non-literals literals))
-        (cond ((= is-end 1) (return 1)))
-        (print is-end)
+        (cond ((= literals 1)
+          0))
+        ;;(setf is-end (check non-literals literals))
+        ;;(cond ((= is-end 1) (return 1)))
+        ;;(print is-end)
         (setf non-literals (set-non-literals non-literals))
-        (print non-literals)
+        ;; (print non-literals)
 
         )
-
-      ;;(setf non-literals (set-non-literals clauses))
-      ;;(print non-literals)
-      ;;(setf literals (set-literals clauses))
-      ;;(print literals)
-
-      ;;(setf non-literals (update-non-literals non-literals literals))
-      ;;(print non-literals)
-      ;;(setf literals (set-literals non-literals literals))
-      ;;(print literals)
-      ;;(setf non-literals (set-non-literals non-literals))
-      ;;(print non-literals)
       )))
 
 ;; (resolution-refutation '(and (or C) (or A) (or A B (not C)) (or (not A) D) (or (not B))))
